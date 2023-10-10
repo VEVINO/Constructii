@@ -1,0 +1,79 @@
+Un proiect mediu pentru o firmă de construcții în Python ar putea fi un sistem simplu de gestionare a proiectelor. Acesta ar putea să permită următoarele funcționalități:
+
+Adăugarea de proiecte noi: Fiecare proiect ar trebui să aibă o denumire, o descriere, o locație și o dată estimată de finalizare.
+
+Listarea proiectelor existente: Afișarea tuturor proiectelor într-un mod organizat, astfel încât utilizatorul să poată vedea informațiile principale despre fiecare proiect.
+
+Actualizarea informațiilor despre proiecte: Posibilitatea de a modifica informațiile despre proiecte (denumire, descriere, locație, dată estimată de finalizare).
+
+Ștergerea proiectelor: Posibilitatea de a elimina un proiect din sistem.
+
+Stocarea datelor: Utilizarea unui sistem de stocare a datelor (cum ar fi un fișier CSV sau o bază de date simplă) pentru a păstra informațiile despre proiecte între sesiunile aplicației.
+
+Validarea datelor de intrare: Asigurarea că datele introduse de utilizator sunt valide înainte de a le procesa.
+
+Interfață de utilizator în linie de comandă (CLI): O interfață de utilizator care să permită interacțiunea cu aplicația folosind comenzi din terminal.
+
+Exemple de proiecte: Adăugarea unor exemple de proiecte pentru a demonstra funcționalitățile aplicației.
+
+Un exemplu simplu de implementare a acestei aplicații în Python ar putea arăta astfel:
+
+python
+Copy code
+import csv
+
+class Proiect:
+    def __init__(self, denumire, descriere, locatie, data_finalizare):
+        self.denumire = denumire
+        self.descriere = descriere
+        self.locatie = locatie
+        self.data_finalizare = data_finalizare
+
+class GestionareProiecte:
+    def __init__(self):
+        self.proiecte = []
+
+    def adauga_proiect(self, proiect):
+        self.proiecte.append(proiect)
+
+    def listeaza_proiecte(self):
+        for index, proiect in enumerate(self.proiecte):
+            print(f"{index + 1}. Denumire: {proiect.denumire}, Locatie: {proiect.locatie}, Data finalizare: {proiect.data_finalizare}")
+
+    def salveaza_in_fisier(self, nume_fisier):
+        with open(nume_fisier, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            for proiect in self.proiecte:
+                writer.writerow([proiect.denumire, proiect.descriere, proiect.locatie, proiect.data_finalizare])
+
+    def incarca_din_fisier(self, nume_fisier):
+        with open(nume_fisier, mode='r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                proiect = Proiect(row[0], row[1], row[2], row[3])
+                self.adauga_proiect(proiect)
+
+# Exemplu de utilizare
+gestionar = GestionareProiecte()
+
+# Adaugare proiecte
+gestionar.adauga_proiect(Proiect("Proiect1", "Descriere1", "Locatie1", "2023-12-31"))
+gestionar.adauga_proiect(Proiect("Proiect2", "Descriere2", "Locatie2", "2023-11-30"))
+
+# Listare proiecte
+gestionar.listeaza_proiecte()
+
+# Salvare in fisier
+gestionar.salveaza_in_fisier('proiecte.csv')
+
+# Incarcare din fisier
+gestionar.incarca_din_fisier('proiecte.csv')
+
+# Listare proiecte dupa incarcare
+gestionar.listeaza_proiecte()
+Acesta este doar un exemplu simplu și poate necesita îmbunătățiri și adăugarea unor funcționalități suplimentare în funcție de cerințe.
+De asemenea, puteți considera utilizarea unei baze de date pentru stocarea datelor în loc de un fișier CSV, dacă proiectul dvs. crește în complexitate.
+
+
+
+
